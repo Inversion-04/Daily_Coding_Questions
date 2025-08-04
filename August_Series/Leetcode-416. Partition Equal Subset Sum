@@ -1,0 +1,40 @@
+class Solution {
+    public boolean helper(int idx, int[] nums, int target, int[][] dp) {
+        if (target == 0) {
+            return true;
+        }
+        if (idx == 0) {
+            return nums[0] == target;
+        }
+        if (dp[idx][target] != -1) {
+            return dp[idx][target] == 1;
+        }
+
+        boolean notake = helper(idx - 1, nums, target, dp);
+        boolean take = false;
+
+        if (nums[idx] <= target) {
+            take = helper(idx - 1, nums, target - nums[idx], dp);
+        }
+
+        dp[idx][target] = take || notake ? 1 : 0;
+        return take || notake;
+    }
+
+    public boolean canPartition(int[] nums) {
+        int total = 0;
+        for (int i = 0; i < nums.length; i++) {
+            total += nums[i];
+        }
+
+        int target = total / 2;
+        if (total % 2 != 0) {
+            return false;
+        }
+        int[][] dp = new int[nums.length][target + 1];
+        for (int i = 0; i < nums.length; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+        return helper(nums.length - 1, nums, target, dp);
+    }
+}
