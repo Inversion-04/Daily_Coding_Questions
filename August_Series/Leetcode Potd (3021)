@@ -1,0 +1,14 @@
+# Alice and Bob Playing Flower Game 
+
+
+class Solution {
+    public long flowerGame(int n, int m) {
+        long ex = (long)(n/2);
+        long ox = (long)(n-ex);
+
+        long ey = (long)(m/2);
+        long oy = (long)(m-ey);
+
+        return (ex*oy + ey*ox);
+    }
+}
