@@ -1,0 +1,41 @@
+class Solution {
+    class Tuple {
+        char ch;
+        int val;
+
+        Tuple(char ch, int val) {
+            this.ch = ch;
+            this.val = val;
+        }
+    }
+
+    public String frequencySort(String s) {
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        PriorityQueue<Tuple> pq = new PriorityQueue<>((a, b) -> b.val - a.val);
+
+        for (int i = 0; i < s.length(); i++) {
+            map.put(s.charAt(i), map.getOrDefault(s.charAt(i), 0) + 1);
+        }
+
+        for (Map.Entry<Character, Integer> e : map.entrySet()) {
+            char key = e.getKey();
+            int val = e.getValue();
+            pq.add(new Tuple(key, val));
+        }
+
+        StringBuilder ans = new StringBuilder();
+        while (!pq.isEmpty()) {
+            Tuple tup = pq.poll();
+            int val = tup.val;
+            char ch = tup.ch;
+
+            while (val > 0) {
+                ans.append(ch);
+                val--;
+            }
+        }
+        return ans.toString();
+
+    }
+}
