@@ -1,0 +1,29 @@
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        int m = triangle.size();
+        int[][]dp = new int[m][m];
+
+        dp[0][0] = triangle.get(0).get(0);
+
+        for(int i=1;i<m;i++){
+            for(int j=0;j<i+1;j++){
+                int up = Integer.MAX_VALUE;
+                if(j<i){
+                 up = triangle.get(i).get(j) + dp[i-1][j];
+                }
+                int diag = Integer.MAX_VALUE;
+                if(j>0){
+                  diag = triangle.get(i).get(j) + dp[i-1][j-1];
+                }
+                dp[i][j] = Math.min(up,diag);
+            }
+        }
+
+        int min = Integer.MAX_VALUE;
+
+        for(int i=0;i<m;i++){
+            min = Math.min(min,dp[m-1][i]);
+        }
+        return min;
+    }
+}
