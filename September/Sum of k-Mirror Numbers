@@ -1,0 +1,59 @@
+class Solution {
+    public String basek(long n, int k) {
+        StringBuilder sb = new StringBuilder();
+        while (n > 0) {
+            sb.append(n % k);
+            n = n / k;
+        }
+        return sb.length()==0?"0":sb.reverse().toString();
+    }
+
+    public boolean isPallindrome(String s) {
+        int left = 0;
+        int right = s.length() - 1;
+
+        while (left <= right) {
+            char ch1 = s.charAt(left);
+            char ch2 = s.charAt(right);
+            if (ch1 != ch2) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+ 
+
+    public long kMirror(int k, int n) {
+        int l = 1;
+        long sum = 0L;
+        while (n > 0) {
+            int half = (l + 1) / 2;
+            int min = (int)Math.pow(10, half - 1);
+            int max = (int)Math.pow(10, half) - 1;
+            for(int num = min;num<=max;num++){
+                StringBuilder sb=new StringBuilder();
+                StringBuilder fh=new StringBuilder(Integer.toString(num));
+                sb.append(fh);
+                if(l%2 == 0){
+                  sb.append(fh.reverse());
+                }else{
+                    sb.append(fh.reverse().substring(1));   
+                }
+
+                long pal=Long.parseLong(sb.toString());
+                    
+                if(isPallindrome(basek(pal,k))){
+                    sum+=pal;
+                    n--;
+                    if(n==0)break;
+                }
+            }
+            l++;
+
+        }
+        return sum;
+
+    }
+}
